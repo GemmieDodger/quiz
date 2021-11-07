@@ -7,7 +7,7 @@ import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
-import { StateEffect } from "@codemirror/state";
+// import { StateEffect } from "@codemirror/state";
 
 const  Quiz = (props) => {
   // state for game play
@@ -16,7 +16,6 @@ const  Quiz = (props) => {
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
   const [quiz, setQuiz] = useState({});
-  const [key, setKey] = useState('');
   const [questions, setQuestions] = useState([]);
     
   const onCollectionUpdate = (querySnapshot) => {
@@ -24,7 +23,6 @@ const  Quiz = (props) => {
     querySnapshot.forEach((doc) => {
       const { answer, answerOptions, code ,options, questionText } = doc.data();
       questions.push({
-        key: doc.id,
         answer, // DocumentSnapshot
         answerOptions,
         code,
@@ -33,23 +31,26 @@ const  Quiz = (props) => {
       });
     });
     setQuestions(questions);
+    // this outputs fine
   }
   
   useEffect(() => {
     const col = firebase.firestore().collection('quizzes').doc(props.match.params.id).collection('questions');
     const ref = firebase.firestore().collection('quizzes').doc(props.match.params.id);
+    
     ref.get().then((doc) => {
       if (doc.exists) {
           setQuiz(doc.data());
-          setKey(doc.id);
           setIsLoading(false);
       } else {
         console.log("No such document!");
       }
     });
     const unsubscribe = col.onSnapshot(onCollectionUpdate);
+
+    console.log(questions)
     return () => unsubscribe()
-  }, []);
+  }, [questions, props.match.params.id]);
 
   const handleAnswerButtonClick = (isCorrect) => {
     const nextQuestion = currentQuestion + 1;
@@ -63,7 +64,7 @@ const  Quiz = (props) => {
       setShowScore(true);
     }
   };
-
+  try {
   return (
     <div>
       <Header />
@@ -115,6 +116,11 @@ const  Quiz = (props) => {
       </Container>
       </div>
     );
+  } catch (e) {
+    return (
+      <h3>There has been an error</h3>
+    );
+  }
 }
 
 export default Quiz;

@@ -6,9 +6,6 @@ import Container from "react-bootstrap/Container";
 import { Link } from 'react-router-dom';
 
 const HomeContent = () => {
-  const [quizzes, setQuizzes] = useState([]);
-  const [key, setKey] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
   const [state, setState] = useState({
     quizzes: [],
   });
@@ -31,11 +28,7 @@ const HomeContent = () => {
     const ref = firebase.firestore().collection("quizzes");
     // console.log(ref.doc());
     ref.get().then((doc) => {
-      if (doc.exists) {
-        setQuizzes(doc.data());
-        setKey(doc.id);
-        setIsLoading(false);
-      } else {
+      if (!doc.exists) {
         console.log("No such document!");
       }
     });
