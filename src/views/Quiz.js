@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CodeBox from '../components/CodeBox';
 import firebase from "../Firebase";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -7,6 +8,7 @@ import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 // import { StateEffect } from "@codemirror/state";
 
 const  Quiz = (props) => {
@@ -68,7 +70,7 @@ const  Quiz = (props) => {
   return (
     <div>
       <Header />
-      <h1>You are competing on: {quiz.quizname}</h1>
+      <h1>You are competing on the quiz of: {quiz.quizname}</h1>
       <Container >
       { isLoading ? 
               <>{/* <Loader
@@ -81,8 +83,13 @@ const  Quiz = (props) => {
         <Row className="bg-dark text-light p-4 m-5">
           <Col> 
             {showScore ? (
-              <div className="score-section">
-                You scored {score} out of {questions.length}
+              <div className="score-section text-center">
+              <Row>
+                <p className="text-center">You scored {score} out of {questions.length}</p>
+                </Row>
+                <Row>
+                <Link to='/'><Button>Go back to Home</Button></Link>
+                </Row>
               </div>
             ) : (
               <Row >
@@ -91,6 +98,7 @@ const  Quiz = (props) => {
                     <span>Question {currentQuestion + 1}</span>/{questions.length}
                   </div>
                   <div>{questions[currentQuestion].questionText}</div>
+                  <CodeBox code={questions[currentQuestion].code}/>
                 </Col>
                 <Col>
                   <Stack gap={3}>
