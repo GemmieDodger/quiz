@@ -4,12 +4,13 @@ import styled from "styled-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Header from "../components/Header";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 
-const HomeContent = () => {
+const Admin = () => {
   const [state, setState] = useState({
     quizzes: [],
   });
@@ -41,36 +42,31 @@ const HomeContent = () => {
   }, []);
 
   return (
+    <>
+    <Header/>
     <Container>
-      <Row>
-        <Col>
-          <p className="mt-2 mb-0 text-center">
-            {" "}
-            You've made it to the QUESTIONSHOP!
-          </p>
-          <p className="mb-4 text-center">Next step, knowledge!</p>
-        </Col>
-      </Row>
-      <Row className="text-center">
-        <h1 className="mb-3">Choose your quiz?</h1> 
-        <Link to="/admin"><h6>Create or edit quiz?</h6></Link>
-      </Row>
-      <Row xs={2} md={3} className="g-4 text-center">
+      <Row xs={2} md={3} className="g-4 mt-2 text-center">
+        <QuizLink to={`/admin/create`}>
+              <Card style={{height: 250, width: 250}} className="bg-dark d-flex text-light">
+                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>Create quiz</QuizHeader></Card.Body>
+              </Card>
+            </QuizLink>
         {state.quizzes.map((quiz) => (
           <div key={quiz.key} className="col-1" data-label="quiz">
-            <QuizLink to={`/quiz/${quiz.key}/${quiz.quizname}`}>
+            <QuizLink to={`/admin/edit/quiz/${quiz.key}/${quiz.quizname}`}>
               <Card style={{height: 250, width: 250}} className="bg-dark d-flex text-light">
-                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>{quiz.quizname}</QuizHeader></Card.Body>
+                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>Edit {quiz.quizname} quiz</QuizHeader></Card.Body>
               </Card>
             </QuizLink>
           </div>
         ))}
       </Row>
     </Container>
+    </>
   );
 };
 
-export default HomeContent;
+export default Admin;
 
 const QuizHeader = styled.h3`
   fontSize: '15px';

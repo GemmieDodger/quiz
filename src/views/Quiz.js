@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import CodeBox from '../components/CodeBox';
 import firebase from "../Firebase";
+import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -19,6 +20,7 @@ const  Quiz = (props) => {
   const [score, setScore] = useState(0);
   const [quiz, setQuiz] = useState({});
   const [questions, setQuestions] = useState([]);
+  const [propsCode, setPropsCode] = useState('');
     
   const onCollectionUpdate = (querySnapshot) => {
     const questions = [];
@@ -33,13 +35,18 @@ const  Quiz = (props) => {
       });
     });
     setQuestions(questions);
-    // this outputs fine
+    setPropsCode(questions[currentQuestion].code);
+
+    console.log("end of collection does update original data: " + questions[currentQuestion].code)
+    console.log("end of collection does update propscodeState: " + propsCode)
   }
   
+  
+
   useEffect(() => {
     const col = firebase.firestore().collection('quizzes').doc(props.match.params.id).collection('questions');
     const ref = firebase.firestore().collection('quizzes').doc(props.match.params.id);
-    
+    console.log("beginning of useeffect propscodeState: " + propsCode)
     ref.get().then((doc) => {
       if (doc.exists) {
           setQuiz(doc.data());
@@ -49,34 +56,34 @@ const  Quiz = (props) => {
       }
     });
     const unsubscribe = col.onSnapshot(onCollectionUpdate);
-
-    console.log(questions)
+    console.log("end of useeffect propscodeState: " + propsCode)
     return () => unsubscribe()
-  }, [questions, props.match.params.id]);
-
+  }, [propsCode]); // , props.match.params.id
+  
   const handleAnswerButtonClick = (isCorrect) => {
+    console.log("beginning of onclick handler propscodeState: " + propsCode)
     const nextQuestion = currentQuestion + 1;
     if (isCorrect) {
       setScore(score + 1);
     }
-
+    setPropsCode('set next question here to be:')
+   
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
+      setPropsCode(questions[nextQuestion].code)
     } else {
       setShowScore(true);
     }
+    console.log("emd of onclick handler" + propsCode)
   };
+  
   try {
   return (
     <div>
       <Header />
-      <h1>You are competing on the quiz of: {quiz.quizname}</h1>
+      <QuizName className="text-center">You are competing the {quiz.quizname} quiz</QuizName>
       <Container >
-      { isLoading ? 
-              <>{/* <Loader
-                height="100"    
-                width="100"
-              /> */}
+      { isLoading ? <> 
               <div>Loading Quiz...</div>
          </>   
       :
@@ -94,14 +101,14 @@ const  Quiz = (props) => {
             ) : (
               <Row >
                 <Col>
-                  <div>
+                  <div className="mb-1">
                     <span>Question {currentQuestion + 1}</span>/{questions.length}
                   </div>
-                  <div>{questions[currentQuestion].questionText}</div>
-                  <CodeBox code={questions[currentQuestion].code}/>
+                  <div className="mb-2">{questions[currentQuestion].questionText}</div>
+                  {propsCode ? <CodeBox code={propsCode}/> : ''}
                 </Col>
                 <Col>
-                  <Stack gap={3}>
+                  <Stack gap={3} className="m-auto">
                     {questions[currentQuestion].answerOptions.map(
                       (answerOption, index) => (
                         <Button key={answerOption.key}
@@ -132,3 +139,10 @@ const  Quiz = (props) => {
 }
 
 export default Quiz;
+
+
+const QuizName = styled.h4`
+  textAlign: 'right';
+  padding: 1em;
+  
+`;
