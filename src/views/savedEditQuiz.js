@@ -7,9 +7,9 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
+// import {getFirestore, collection, getDocs, onSnapshot, doc, setdoc } from 'firebase/firestore'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
 
 const EditQuiz = (props) => {
   // state for display of quiz
@@ -17,6 +17,7 @@ const EditQuiz = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [quiz, setQuiz] = useState({});
   const [questions, setQuestions] = useState([]);
+  const [propsCode, setPropsCode] = useState("");
 
   // state for add new quiz question
   const [newQuestion, setNewQuestion] = useState({
@@ -27,7 +28,6 @@ const EditQuiz = (props) => {
       { answerText: "", isCorrect: "" },
     ],
     code: "",
-    timestamp: "",
   });
 
 
@@ -37,31 +37,12 @@ const EditQuiz = (props) => {
   .doc(props.match.params.id)
   .collection("questions");
 
-  const onCollectionUpdate = (querySnapshot) => {
-    const questions = [];
-    querySnapshot.forEach((doc) => {
-      
-      const { questionText, answerOptions, code, timestamp } = doc.data();
-      questions.push({
-        key: doc.id,// DocumentSnapshot
-        doc,
-        questionText,
-        answerOptions,
-        code,
-        timestamp,
-      });
-    });
-    setQuestions(questions);
-  };
-
-
   useEffect(() => {
     const col = firebase
       .firestore()
       .collection("quizzes")
       .doc(props.match.params.id)
-      .collection("questions").orderBy("timestamp");
-      console.log(col)
+      .collection("questions").orderBy("timestamp"); //missing
     const ref = firebase
       .firestore()
       .collection("quizzes")
@@ -77,10 +58,11 @@ const EditQuiz = (props) => {
     });
     const unsubscribe = col.onSnapshot(onCollectionUpdate);
     return () => unsubscribe();
-  }, [props.match.params.id]); // , props.match.params.id
+  }, [propsCode]); // , props.match.params.id
 
 
   const onChange = (e) => {
+    console.log(newQuestion)
     const name = e.target.name;
     if (name.includes("answerText")) {
       const ref = parseInt(name.match(/\d+/)[0]);
@@ -94,6 +76,24 @@ const EditQuiz = (props) => {
       newQuestion[name] = e.target.value;
       setNewQuestion(newQuestion);
     }
+    console.log(newQuestion.answerOptions[0] + newQuestion.answerOptions[1] + newQuestion.answerOptions[2] + 'in onChange')
+  };
+
+  const onCollectionUpdate = (querySnapshot) => {
+    const questions = [];
+    querySnapshot.forEach((doc) => {
+      const { questionText, answerOptions, code  } = doc.data();
+      questions.push({
+        key: doc.id,
+        doc, // DocumentSnapshot
+        questionText,
+        answerOptions,
+        code,
+      });
+    });
+    console.log(questions)
+    setQuestions(questions);
+    // setPropsCode(questions[currentQuestion].code);
   };
 
   const onSubmit = (e) => {
@@ -105,7 +105,7 @@ const EditQuiz = (props) => {
         questionText,
         answerOptions,
         code,
-        timestamp
+        timestamp,
       })
       .then((docRef) => {
         setNewQuestion({
@@ -116,7 +116,7 @@ const EditQuiz = (props) => {
             { answerText: "", isCorrect: "" },
           ],
           code: "",
-          timestamp: "",
+          
         });
         props.history.push(
           `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
@@ -136,7 +136,9 @@ const EditQuiz = (props) => {
       const ref = parseInt(name.match(/\d+/g)[1]);
       console.log(questions[questionRef])
       console.log(ref)
+      console.log(questionRef)
       console.log(questions[questionRef].answerOptions[ref])
+      console.log(questions[questionRef].answerOptions[ref].answerText)
       questions[questionRef].answerOptions[ref].answerText = e.target.value;
       setQuestions(questions);
     } else if (name.includes("isCorrect")) {
@@ -188,13 +190,12 @@ const EditQuiz = (props) => {
         
       console.log("Document successfully deleted!");
       props.history.push(
-        `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
+        `/admin/edit`
       );
     }).catch((error) => {
       console.error("Error removing document: ", error);
     });
   }
-
 
   const { answerOptions, code, questionText } = newQuestion;
   try {
@@ -217,7 +218,7 @@ const EditQuiz = (props) => {
                   <Form onSubmit={onSubmitQuestions}>
                     {questions.map((question, index) => (
                       <>
-                        <Row className="mb-4 mt-4">
+                        <Row key={index} className="mb-4 mt-4">
                           <Col>
                             <div className="mb-1">
                               <span>Question {index + 1}</span>

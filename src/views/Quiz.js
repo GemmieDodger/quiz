@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import CodeBox from '../components/CodeBox';
 import firebase from "../Firebase";
 import styled from "styled-components";
@@ -10,7 +10,7 @@ import Container from "react-bootstrap/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-// import { StateEffect } from "@codemirror/state";
+
 
 const  Quiz = (props) => {
   // state for game play
