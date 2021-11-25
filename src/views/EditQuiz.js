@@ -17,6 +17,7 @@ const EditQuiz = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [quiz, setQuiz] = useState({});
   const [questions, setQuestions] = useState([]);
+  const [deleted, setDeleted] = useState(false);
 
   // state for add new quiz question
   const [newQuestion, setNewQuestion] = useState({
@@ -61,7 +62,6 @@ const EditQuiz = (props) => {
       .collection("quizzes")
       .doc(props.match.params.id)
       .collection("questions").orderBy("timestamp");
-      console.log(col)
     const ref = firebase
       .firestore()
       .collection("quizzes")
@@ -77,7 +77,7 @@ const EditQuiz = (props) => {
     });
     const unsubscribe = col.onSnapshot(onCollectionUpdate);
     return () => unsubscribe();
-  }, [props.match.params.id]); // , props.match.params.id
+  }, [deleted]); // , props.match.params.id
 
 
   const onChange = (e) => {
@@ -186,6 +186,7 @@ const EditQuiz = (props) => {
     .collection("questions")
     .doc(questionId).delete().then(() => {
         
+      setDeleted(deleted ? true : false);
       console.log("Document successfully deleted!");
       props.history.push(
         `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
