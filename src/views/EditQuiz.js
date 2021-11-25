@@ -28,7 +28,7 @@ const EditQuiz = (props) => {
       { answerText: "", isCorrect: "" },
     ],
     code: "",
-    timestamp: "",
+    timestamp: 0,
   });
 
 
@@ -42,7 +42,7 @@ const EditQuiz = (props) => {
     const questions = [];
     querySnapshot.forEach((doc) => {
       
-      const { questionText, answerOptions, code, timestamp } = doc.data();
+      const { key, questionText, answerOptions, code, timestamp } = doc.data();
       questions.push({
         key: doc.id,// DocumentSnapshot
         doc,
@@ -116,7 +116,7 @@ const EditQuiz = (props) => {
             { answerText: "", isCorrect: "" },
           ],
           code: "",
-          timestamp: "",
+          timestamp: 0,
         });
         props.history.push(
           `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
@@ -129,48 +129,48 @@ const EditQuiz = (props) => {
 
   const onChangeQuestions = (e) => {
     const name = e.target.name;
-    console.log(name)
+    switch (e.target.name) {}
     const questionRef = parseInt(name.match(/\d+/)[0]);
     if (name.includes("answerText")) {
-      console.log(name.match(/\d/))
       const ref = parseInt(name.match(/\d+/g)[1]);
-      console.log(questions[questionRef])
-      console.log(ref)
-      console.log(questions[questionRef].answerOptions[ref])
       questions[questionRef].answerOptions[ref].answerText = e.target.value;
-      setQuestions(questions);
     } else if (name.includes("isCorrect")) {
       const ref = parseInt(name.match(/\d+/g)[1])
       questions[questionRef].answerOptions[ref].isCorrect = e.target.value;
-      setQuestions(questions);
-    } else {
-      questions[questionRef][name] = e.target.value;
-      setQuestions(questions);
-    }
+    } else if (name.includes("code")) {
+      questions[questionRef]["code"] = e.target.value; 
+    } else if (name.includes("questionText")) {
+      questions[questionRef]["code"] = e.target.value; 
+    } 
+    setQuestions(questions);
   };
 
   const onSubmitQuestions = (e) => {
     e.preventDefault()
-    const updateRef = firebase
-    .firestore()
-    .collection("quizzes")
-    .doc(props.match.params.id)
-    .collection("questions");
+
     const updatedQuestions = questions
 
       questions.map((question, index) => {
-        console.log(question.id)
+        const updateRef = firebase
+        .firestore()
+        .collection("quizzes")
+        .doc(props.match.params.id)
+        .collection("questions").doc(question.key);
+        console.log(question)
 
         const { key, questionText, answerOptions, code, timestamp } = question;
-        
-        updatedQuestions[index] = question;
+        // updatedQuestions[index] = question;
+        updateRef.set({
+          key,
+          questionText,
+          answerOptions,
+          code,
+          timestamp,
+        }).catch((error) => {
+            console.error("Error adding document: ", error);
+          });
     })
-    updateRef.set(
-      updatedQuestions
-    )
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
+   
     
       props.history.push(
         `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
@@ -197,7 +197,7 @@ const EditQuiz = (props) => {
   }
 
 
-  const { answerOptions, code, questionText } = newQuestion;
+  const { answerOptions, code, questionText, timestamp } = newQuestion;
   try {
     return (
       <div>
@@ -211,24 +211,24 @@ const EditQuiz = (props) => {
               <div>Loading Quiz questions...</div>
             </>
           ) : (
-            <Row className="bg-dark text-light p-4 m-5">
+            <Row >
               <Col>
-                <Row>
-                  <span>UPDATE QUESTIONS</span>
+                <Row className="bg-dark text-light p-4 m-5">
+                  <h2>UPDATE QUESTIONS</h2>
                   <Form onSubmit={onSubmitQuestions}>
                     {questions.map((question, index) => (
                       <>
                         <Row className="mb-4 mt-4">
                           <Col>
                             <div className="mb-1">
-                              <span>Question {index + 1}</span>
+                              <span><h3>Question {index + 1}</h3></span>
                             </div>
                             <Form.Group
                               className="mb-3"
                               controlId="questionText"
                             >
                               <Form.Control
-                                type="textarea"
+                                as="textarea"
                                 rows={2}
                                 placeholder={questions[index].questionText}
                                 name={`question[${index}].questionText`}
@@ -245,8 +245,8 @@ const EditQuiz = (props) => {
                                 </Form.Text>
                               </Row>
                               <Form.Control
-                                type="textarea"
-                                rows={6}
+                                as="textarea"
+                                rows={3}
                                 placeholder={questions[index].code}
                                 name={`questions[${index}].code`}
                                 defaultValue={questions[index].code}
@@ -254,12 +254,11 @@ const EditQuiz = (props) => {
                               />
                             </Form.Group>
                             <Row>
-                            <h1>{question.key}</h1>
                             <Button onClick={deleteQuestion.bind(this, question.key)} className="btn-danger mt-4">Delete</Button>
                             </Row>
                           </Col>
                           <Col>
-                            <Stack gap={3} className="m-auto">
+                            <Stack gap={3} className="m-auto mt-2">
                               <Row>
                                 <Col>
                                   <Row>
@@ -270,7 +269,7 @@ const EditQuiz = (props) => {
                                       >
                                         <Form.Label>Option 1:</Form.Label>
                                         <Form.Control
-                                          type="textarea"
+                                          as="textarea"
                                           rows={1}
                                           placeholder={
                                             questions[index].answerOptions[0]
@@ -309,7 +308,7 @@ const EditQuiz = (props) => {
                                       >
                                         <Form.Label>Option 2?</Form.Label>
                                         <Form.Control
-                                          type="textarea"
+                                          as="textarea"
                                           rows={1}
                                           placeholder={
                                             questions[index]
@@ -347,7 +346,7 @@ const EditQuiz = (props) => {
                                       >
                                         <Form.Label>Option 3:</Form.Label>
                                         <Form.Control
-                                          type="textarea"
+                                          as="textarea"
                                           rows={1}
                                           placeholder={
                                             questions[index]
@@ -389,24 +388,24 @@ const EditQuiz = (props) => {
                     <Button
                             variant="primary"
                             className="m-4 "
-                            type="submit"
+                            as="submit"
                           >
                             Send updated Questions
                           </Button>
                   </Form>
                 </Row>
-                <Form onSubmit={onSubmit}>
+                <CreateForm className="bg-dark text-light p-4 m-5" onSubmit={onSubmit}>
                   <Row>
                     <Col>
                       <div className="mb-1">
-                        <span>ADD NEW QUESTION</span>
+                        <h2>ADD NEW QUESTION</h2>
                       </div>
                       <Form.Group className="mb-3" controlId="questionText">
                         <Form.Label>
                           What question would you like to ask?
                         </Form.Label>
                         <Form.Control
-                          type="textarea"
+                          as="textarea"
                           rows={2}
                           placeholder="Ask question here"
                           name="questionText"
@@ -425,8 +424,8 @@ const EditQuiz = (props) => {
                           </Form.Text>
                         </Row>
                         <Form.Control
-                          type="textarea"
-                          rows={6}
+                          as="textarea"
+                          rows={3}
                           placeholder="if (a < b) { console.log('Yeah!') }"
                           name="code"
                           defaultValue={code}
@@ -434,7 +433,7 @@ const EditQuiz = (props) => {
                         />
                       </Form.Group>
                     </Col>
-                    <Col>
+                    <Col className="mt-5">
                       <Stack gap={3} className="m-auto">
                         <Row>
                           <Col>
@@ -448,7 +447,7 @@ const EditQuiz = (props) => {
                                     Please suggest option 1?
                                   </Form.Label>
                                   <Form.Control
-                                    type="textarea"
+                                    as="textarea"
                                     rows={1}
                                     placeholder="Option 1"
                                     name="answerOptions[0].answerText"
@@ -479,7 +478,7 @@ const EditQuiz = (props) => {
                                     Please suggest option 2?
                                   </Form.Label>
                                   <Form.Control
-                                    type="textarea"
+                                    as="textarea"
                                     rows={1}
                                     placeholder="Option 2"
                                     name="answerOptions[1].answerText"
@@ -507,7 +506,7 @@ const EditQuiz = (props) => {
                                     Please suggest option 3?
                                   </Form.Label>
                                   <Form.Control
-                                    type="textarea"
+                                    as="textarea"
                                     rows={1}
                                     placeholder="Option 3"
                                     name="answerOptions[2].answerText"
@@ -534,11 +533,11 @@ const EditQuiz = (props) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Button variant="primary" className="mt-4" type="submit">
+                    <Button variant="primary" className="mt-4" as="submit">
                       Add Question
                     </Button>
                   </Row>
-                </Form>
+                </CreateForm>
               </Col>
             </Row>
           )}
@@ -556,4 +555,9 @@ export default EditQuiz;
 const QuizName = styled.h4`
   textalign: "right";
   padding: 1em;
+`;
+
+const CreateForm = styled(Form)`
+
+  margin: 2em;
 `;
