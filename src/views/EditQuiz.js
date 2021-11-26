@@ -128,48 +128,6 @@ const EditQuiz = (props) => {
       });
   };
 
-  const onSubmitNewQuiz = (e) => {
-    e.preventDefault()
-    const timestamp = new Date().getTime()
-    const { questionText, answerOptions, code } = newQuestion;
-    const col = firebase
-    .firestore()
-    .collection("quizzes")
-    .doc(props.match.params.id)
-    .ref("/questions")
-    // col
-    //   .add({
-    //     questionText,
-    //     answerOptions,
-    //     code,
-    //     timestamp
-    //   })
-    col.add({
-      questionText,
-      answerOptions,
-      code,
-      timestamp
-    })
-      .then((docRef) => {
-        setNewQuestion({
-          questionText: "",
-          answerOptions: [
-            { answerText: "", isCorrect: "" },
-            { answerText: "", isCorrect: "" },
-            { answerText: "", isCorrect: "" },
-          ],
-          code: "",
-          timestamp: 0,
-        });
-        props.history.push(
-          `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
-        );
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
-  };
-
   const onChangeQuestions = (e) => {
     const name = e.target.name;
     switch (e.target.name) {}
