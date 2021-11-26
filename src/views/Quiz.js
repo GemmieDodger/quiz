@@ -56,12 +56,10 @@ const  Quiz = (props) => {
       }
     });
     const unsubscribe = col.onSnapshot(onCollectionUpdate);
-    console.log("end of useeffect propscodeState: " + propsCode)
     return () => unsubscribe()
-  }, [propsCode]); // , props.match.params.id
+  }, [propsCode]); 
   
   const handleAnswerButtonClick = (isCorrect) => {
-    console.log("beginning of onclick handler propscodeState: " + propsCode)
     const nextQuestion = currentQuestion + 1;
     if (isCorrect) {
       setScore(score + 1);
@@ -74,7 +72,6 @@ const  Quiz = (props) => {
     } else {
       setShowScore(true);
     }
-    console.log("emd of onclick handler" + propsCode)
   };
   
   try {
