@@ -16,15 +16,16 @@ const Admin = () => {
   const onCollectionUpdate = (querySnapshot) => {
     const quizzes = [];
     querySnapshot.forEach((doc) => {
-      const { quizname } = doc.data();
+      const { quizName } = doc.data();
       quizzes.push({
         key: doc.id,
         doc, // DocumentSnapshot
-        quizname,
+        quizName,
       });
     });
     setState({ quizzes });
   };
+
 
   //check quizzes exists + set state
   useEffect(() => {
@@ -51,9 +52,9 @@ const Admin = () => {
             </QuizLink>
         {state.quizzes.map((quiz) => (
           <div key={quiz.key} className="col-1" data-label="quiz">
-            <QuizLink to={`/admin/edit/quiz/${quiz.key}/${quiz.quizname}`}>
+            <QuizLink to={`/admin/edit/quiz/${quiz.key}/${quiz.quizName}`}>
               <Card style={{height: 250, width: 250}} className="bg-dark d-flex text-light">
-                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>Edit {quiz.quizname} quiz</QuizHeader></Card.Body>
+                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>Edit {quiz.quizName} quiz</QuizHeader></Card.Body>
               </Card>
             </QuizLink>
           </div>

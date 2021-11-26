@@ -16,11 +16,11 @@ const HomeContent = () => {
   const onCollectionUpdate = (querySnapshot) => {
     const quizzes = [];
     querySnapshot.forEach((doc) => {
-      const { quizname } = doc.data();
+      const { quizName } = doc.data();
       quizzes.push({
         key: doc.id,
         doc, // DocumentSnapshot
-        quizname,
+        quizName,
       });
     });
     setState({ quizzes });
@@ -44,7 +44,6 @@ const HomeContent = () => {
       <Row>
         <Col>
           <p className="mt-2 mb-0 text-center">
-            {" "}
             You've made it to the QUESTIONSHOP!
           </p>
           <p className="mb-4 text-center">Next step, knowledge!</p>
@@ -57,9 +56,9 @@ const HomeContent = () => {
       <Row xs={2} md={3} className="g-4 text-center">
         {state.quizzes.map((quiz) => (
           <div key={quiz.key} className="col-1" data-label="quiz">
-            <QuizLink to={`/quiz/${quiz.key}/${quiz.quizname}`}>
+            <QuizLink to={`/quiz/${quiz.key}/${quiz.quizName}`}>
               <Card style={{height: 250, width: 250}} className="bg-dark d-flex text-light">
-                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>{quiz.quizname}</QuizHeader></Card.Body>
+                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>{quiz.quizName}</QuizHeader></Card.Body>
               </Card>
             </QuizLink>
           </div>

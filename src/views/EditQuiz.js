@@ -388,13 +388,13 @@ const EditQuiz = (props) => {
                     <Button
                             variant="primary"
                             className="m-4 "
-                            as="submit"
+                            type="submit"
                           >
                             Send updated Questions
                           </Button>
                   </Form>
                 </Row>
-                <CreateForm className="bg-dark text-light p-4 m-5" onSubmit={onSubmit}>
+                <Form className="bg-dark text-light p-4 m-5" onSubmit={onSubmit}>
                   <Row>
                     <Col>
                       <div className="mb-1">
@@ -537,7 +537,7 @@ const EditQuiz = (props) => {
                       Add Question
                     </Button>
                   </Row>
-                </CreateForm>
+                </Form>
               </Col>
             </Row>
           )}
