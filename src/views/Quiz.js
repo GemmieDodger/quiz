@@ -34,23 +34,23 @@ const  Quiz = (props) => {
         questionText,
       });
     });
+    if(questions[0]) {
     setQuestions(questions);
     setPropsCode(questions[currentQuestion].code);
-
-    console.log("end of collection does update original data: " + questions[currentQuestion].code)
-    console.log("end of collection does update propscodeState: " + propsCode)
+    setIsLoading(false);
   }
+}
   
   
 
   useEffect(() => {
     const col = firebase.firestore().collection('quizzes').doc(props.match.params.id).collection('questions');
     const ref = firebase.firestore().collection('quizzes').doc(props.match.params.id);
-    console.log("beginning of useeffect propscodeState: " + propsCode)
+    
     ref.get().then((doc) => {
-      if (doc.exists) {
+      if (doc.exists && doc.questions) {
           setQuiz(doc.data());
-          setIsLoading(false);
+          
       } else {
         console.log("No such document!");
       }
@@ -133,7 +133,13 @@ const  Quiz = (props) => {
     );
   } catch (e) {
     return (
-      <h3>There has been an error</h3>
+      <>
+      <Header />
+      <h3>There appear to be no questions set for this quiz.</h3>
+      <Link to='/'><h4>Return to home</h4></Link>
+      <h6>or</h6>
+      <Link to={`/admin/edit/quiz/${quiz.key}/${quiz.quizName}`}><h4>Edit quiz</h4></Link>
+      </>
     );
   }
 }

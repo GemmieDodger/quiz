@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import firebase from "../Firebase";
-import styled from "styled-components";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
 
 const CreateQuiz = (props) => {
   const [quiz, setQuiz] = useState({
