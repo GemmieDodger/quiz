@@ -41,6 +41,7 @@ const CreateQuiz = (props) => {
   };
 
   return (
+    <>
     <div>
       <Header />
       <div>
@@ -65,12 +66,8 @@ const CreateQuiz = (props) => {
         </Container>
       </div>
     </div>
+    </>
   );
 };
 
 export default CreateQuiz;
-
-const QuizName = styled.h4`
-  textalign: "right";
-  padding: 1em;
-`;

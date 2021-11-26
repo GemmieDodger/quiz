@@ -100,6 +100,7 @@ const EditQuiz = (props) => {
     e.preventDefault()
     const timestamp = new Date().getTime()
     const { questionText, answerOptions, code } = newQuestion;
+    console.log(col)
     col
       .add({
         questionText,
@@ -107,6 +108,48 @@ const EditQuiz = (props) => {
         code,
         timestamp
       })
+      .then((docRef) => {
+        setNewQuestion({
+          questionText: "",
+          answerOptions: [
+            { answerText: "", isCorrect: "" },
+            { answerText: "", isCorrect: "" },
+            { answerText: "", isCorrect: "" },
+          ],
+          code: "",
+          timestamp: 0,
+        });
+        props.history.push(
+          `/admin/edit/quiz/${props.match.params.id}/${quiz.quizname}`
+        );
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+  };
+
+  const onSubmitNewQuiz = (e) => {
+    e.preventDefault()
+    const timestamp = new Date().getTime()
+    const { questionText, answerOptions, code } = newQuestion;
+    const col = firebase
+    .firestore()
+    .collection("quizzes")
+    .doc(props.match.params.id)
+    .ref("/questions")
+    // col
+    //   .add({
+    //     questionText,
+    //     answerOptions,
+    //     code,
+    //     timestamp
+    //   })
+    col.add({
+      questionText,
+      answerOptions,
+      code,
+      timestamp
+    })
       .then((docRef) => {
         setNewQuestion({
           questionText: "",
@@ -198,22 +241,33 @@ const EditQuiz = (props) => {
 
 
   const { answerOptions, code, questionText, timestamp } = newQuestion;
-  try {
-    return (
-      <div>
-        <Header />
-        <QuizName className="text-center">
+  
+  if (questions[0]) {
+    return(
+      <>
+      <style type="text/css">
+    {`
+    .h4-quizAlign {
+      textalign: "right";
+      padding: 1em;
+    }
+
+    .btn-flat {
+      background-color: purple;
+      color: white;
+    }
+
+    .btn-xxl {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
+    `}
+  </style>
+      <Header />
+        <h4 className="text-center" variant="quizAlign">
           You are editing the {quiz.quizname} quiz
-        </QuizName>
-        <Container>
-          {isLoading ? (
-            <>
-              <div>Loading Quiz questions...</div>
-            </>
-          ) : (
-            <Row >
-              <Col>
-                <Row className="bg-dark text-light p-4 m-5">
+        </h4>
+        <Row className="bg-dark text-light p-4 m-5">
                   <h2>UPDATE QUESTIONS</h2>
                   <Form onSubmit={onSubmitQuestions}>
                     {questions.map((question, index) => (
@@ -394,6 +448,7 @@ const EditQuiz = (props) => {
                           </Button>
                   </Form>
                 </Row>
+                     
                 <Form className="bg-dark text-light p-4 m-5" onSubmit={onSubmit}>
                   <Row>
                     <Col>
@@ -533,31 +588,175 @@ const EditQuiz = (props) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Button variant="primary" className="mt-4" as="submit">
+                    <Button variant="primary" className="mt-4" type="submit">
                       Add Question
                     </Button>
                   </Row>
                 </Form>
-              </Col>
-            </Row>
-          )}
-        </Container>
-      </div>
-    );
-  } catch (e) {
-    console.log(e);
-    return <h3>There has been an error</h3>;
+        </>
+    )
+  } else {
+    return (
+      <>
+      <Header />
+        <h4 className="text-center" variant="quizAlign">
+          You are editing the {quiz.quizname} quiz
+        </h4>
+             
+        <Form className="bg-dark text-light p-4 m-5" onSubmit={onSubmit}>
+                  <Row>
+                    <Col>
+                      <div className="mb-1">
+                        <h2>ADD NEW QUESTION</h2>
+                      </div>
+                      <Form.Group className="mb-3" controlId="questionText">
+                        <Form.Label>
+                          What question would you like to ask?
+                        </Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={2}
+                          placeholder="Ask question here"
+                          name="questionText"
+                          defaultValue={questionText}
+                          onChange={onChange}
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="code">
+                        <Form.Label>
+                          Would you like to provide some code for this question?{" "}
+                        </Form.Label>
+                        <Row>
+                          <Form.Text className="text-muted">
+                            Write code in text, with no indents or formatting.
+                            JavaScript is formatted on display.
+                          </Form.Text>
+                        </Row>
+                        <Form.Control
+                          as="textarea"
+                          rows={3}
+                          placeholder="if (a < b) { console.log('Yeah!') }"
+                          name="code"
+                          defaultValue={code}
+                          onChange={onChange}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col className="mt-5">
+                      <Stack gap={3} className="m-auto">
+                        <Row>
+                          <Col>
+                            <Row>
+                              <Col>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="answerOption0"
+                                >
+                                  <Form.Label>
+                                    Please suggest option 1?
+                                  </Form.Label>
+                                  <Form.Control
+                                    as="textarea"
+                                    rows={1}
+                                    placeholder="Option 1"
+                                    name="answerOptions[0].answerText"
+                                    defaultValue={answerOptions[0].answerText}
+                                    onChange={onChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                              <Col>
+                                <Form.Label>Option 1 is</Form.Label>
+                                <Form.Select
+                                  aria-label="The answer is correct or incorrect"
+                                  name="answerOptions[0].isCorrect"
+                                  onChange={onChange}
+                                >
+                                  <option value="false">Incorrect</option>
+                                  <option value="true">Correct</option>
+                                </Form.Select>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="answerOption1"
+                                >
+                                  <Form.Label>
+                                    Please suggest option 2?
+                                  </Form.Label>
+                                  <Form.Control
+                                    as="textarea"
+                                    rows={1}
+                                    placeholder="Option 2"
+                                    name="answerOptions[1].answerText"
+                                    defaultValue={answerOptions[1].answerText}
+                                    onChange={onChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                              <Col>
+                                <Form.Label>Option 2 is</Form.Label>
+                                <Form.Select
+                                  aria-label="The answer is correct or incorrect"
+                                  name="answerOptions[1].isCorrect"
+                                  onChange={onChange}
+                                >
+                                  <option value="false">Incorrect</option>
+                                  <option value="true">Correct</option>
+                                </Form.Select>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col>
+                                <Form.Group controlId="answerOption2">
+                                  <Form.Label>
+                                    Please suggest option 3?
+                                  </Form.Label>
+                                  <Form.Control
+                                    as="textarea"
+                                    rows={1}
+                                    placeholder="Option 3"
+                                    name="answerOptions[2].answerText"
+                                    defaultValue={answerOptions[2].answerText}
+                                    onChange={onChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                              <Col>
+                                <Form.Label>Option 3 is</Form.Label>
+                                <Form.Select
+                                  aria-label="The answer is correct or incorrect"
+                                  name="answerOptions[2].isCorrect"
+                                  onChange={onChange}
+                                >
+                                  <option value="false">Incorrect</option>
+                                  <option value="true">Correct</option>
+                                </Form.Select>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Stack>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Button variant="primary" className="mt-4" type="submit">
+                      Add Question
+                    </Button>
+                  </Row>
+                </Form>
+        </>
+    )
   }
-};
+ 
+    return (
+      <>
+      </>
+    );
+  } 
 
 export default EditQuiz;
 
-const QuizName = styled.h4`
-  textalign: "right";
-  padding: 1em;
-`;
 
-const CreateForm = styled(Form)`
-
-  margin: 2em;
-`;
