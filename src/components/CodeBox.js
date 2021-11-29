@@ -8,9 +8,7 @@ import beautify_js from 'js-beautify';
 const CodeBox = (props) => {
   const editor = useRef();
   const [code, setCode] = useState("");
-  console.log('passed into codebox: ' + props.code)
   useEffect(() => {
-  console.log('passed into codebx useeffect(): ' + props.code)
 
     const { current } = editor;
     
