@@ -40,7 +40,7 @@ const HomeContent = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className="text-center">
       <Row>
         <Col>
           <p className="mt-2 mb-0 text-center">
@@ -49,19 +49,21 @@ const HomeContent = () => {
           <p className="mb-4 text-center">Next step, knowledge!</p>
         </Col>
       </Row>
-      <Row className="text-center">
+      <Row>
         <h1 className="mb-3">Choose your quiz?</h1> 
         <Link to="/admin"><h6>Create or edit quiz?</h6></Link>
       </Row>
-      <Row xs={2} md={3} className="g-4 text-center">
+      <Row className="g-4 text-center justify-content-center">
         {state.quizzes.map((quiz) => (
-          <div key={quiz.key} className="col-1" data-label="quiz">
-            <QuizLink to={`/quiz/${quiz.key}/${quiz.quizName}`}>
-              <Card style={{height: 250, width: 250}} className="bg-dark d-flex text-light">
+          <Col xs={12} md={4}>
+          <div key={quiz.key}  data-label="quiz">
+            <QuizLink to={`/quiz/${quiz.key}/${quiz.quizName}`} >
+              <Card style={{height: 250}} className="bg-dark d-flex  m-0 p-0 text-light xs={1} md={2}">
                 <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>{quiz.quizName}</QuizHeader></Card.Body>
               </Card>
             </QuizLink>
           </div>
+          </Col>
         ))}
       </Row>
     </Container>

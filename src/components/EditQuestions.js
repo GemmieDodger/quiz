@@ -156,7 +156,7 @@ const EditQuestions = (props) => {
           <Form onSubmit={onSubmitQuestions}>
             {questions.map((question, index) => (
               <>
-                <Row className="mb-4 mt-4">
+                <Row className="mb-4 mt-4" test-id="editQuestion">
                   <Col>
                     <div className="mb-1">
                       <span>

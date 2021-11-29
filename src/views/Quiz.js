@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import CodeBox from '../components/CodeBox';
 import firebase from "../Firebase";
+
+import { Link } from "react-router-dom";
+
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
 import Container from "react-bootstrap/Container";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+
+import CodeBox from '../components/CodeBox';
+import ErrorMessage from '../components/ErrorMessage';
+import Loading from '../components/Loading';
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
+
 
 
 const  Quiz = (props) => {
@@ -21,6 +27,7 @@ const  Quiz = (props) => {
   const [quiz, setQuiz] = useState({});
   const [questions, setQuestions] = useState([]);
   const [propsCode, setPropsCode] = useState('');
+  const [showErrorScreen, setShowErrorScreen] = useState(false);
     
   const onCollectionUpdate = (querySnapshot) => {
     const questions = [];
@@ -38,6 +45,9 @@ const  Quiz = (props) => {
     setQuestions(questions);
     setPropsCode(questions[currentQuestion].code);
     setIsLoading(false);
+  } else {
+    setIsLoading(false)
+    setShowErrorScreen(true);
   }
 }
   
@@ -78,10 +88,13 @@ const  Quiz = (props) => {
   return (
     <div>
       <Header />
-      <QuizName className="text-center">You are competing the {quiz.quizname} quiz</QuizName>
+      <QuizName className="text-center">You are competing the {quiz.quizName} quiz</QuizName>
       <Container >
+      { showErrorScreen ? <> 
+      <ErrorMessage type="questions"  quiz={quiz}/>
+      </> : '' }
       { isLoading ? <> 
-              <div>Loading Quiz...</div>
+              <Loading />
          </>   
       :
         <Row className="bg-dark text-light p-4 m-5">
@@ -132,10 +145,7 @@ const  Quiz = (props) => {
     return (
       <>
       <Header />
-      <h3>There appear to be no questions set for this quiz.</h3>
-      <Link to='/'><h4>Return to home</h4></Link>
-      <h6>or</h6>
-      <Link to={`/admin/edit/quiz/${quiz.key}/${quiz.quizName}`}><h4>Edit quiz</h4></Link>
+      <ErrorMessage type="quiz" quiz={quiz}/>
       </>
     );
   }
