@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../Firebase";
 
-import { Link } from "react-router-dom";
-
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";

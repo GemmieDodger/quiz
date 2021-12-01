@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import firebase from "../Firebase";
+import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
