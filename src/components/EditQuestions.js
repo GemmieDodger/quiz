@@ -66,19 +66,26 @@ const EditQuestions = (props) => {
 
   const onChangeQuestions = (e) => {
     const name = e.target.name;
-    switch (e.target.name) {
-    }
+    console.log(name)
     const questionRef = parseInt(name.match(/\d+/)[0]);
     if (name.includes("answerText")) {
       const ref = parseInt(name.match(/\d+/g)[1]);
       questions[questionRef].answerOptions[ref].answerText = e.target.value;
+      console.log(e.target.value)
+      console.log(questions[questionRef].answerOptions[ref].answerText)
     } else if (name.includes("isCorrect")) {
       const ref = parseInt(name.match(/\d+/g)[1]);
       questions[questionRef].answerOptions[ref].isCorrect = e.target.value;
+      console.log(e.target.value)
+      console.log(questions[questionRef].answerOptions[ref].isCorrect)
     } else if (name.includes("code")) {
       questions[questionRef]["code"] = e.target.value;
+      console.log(e.target.value)
+      console.log(questions[questionRef]["code"])
     } else if (name.includes("questionText")) {
-      questions[questionRef]["code"] = e.target.value;
+      questions[questionRef]["questionText"] = e.target.value;
+      console.log(e.target.value)
+      console.log(questions[questionRef]["questionText"])
     }
     setQuestions(questions);
   };
@@ -156,7 +163,7 @@ const EditQuestions = (props) => {
           <Form onSubmit={onSubmitQuestions}>
             {questions.map((question, index) => (
               <>
-                <Row className="mb-4 mt-4" test-id="editQuestion">
+                <Row className="mb-4 mt-4" test-id="editQuestion" key={index}>
                   <Col>
                     <div className="mb-1">
                       <span>
@@ -318,7 +325,7 @@ const EditQuestions = (props) => {
               </>
             ))}
             <Button variant="primary" className="m-4 " type="submit">
-              Send updated Questions
+              Save updates
             </Button>
           </Form>
         </Row>

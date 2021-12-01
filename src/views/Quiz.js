@@ -15,6 +15,7 @@ import CodeBox from "../components/CodeBox";
 import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
 import Header from "../components/Header";
+import ShowScore from "../components/ShowScore";
 
 const Quiz = (props) => {
   // state for game play
@@ -27,6 +28,7 @@ const Quiz = (props) => {
   const [questions, setQuestions] = useState([]);
   const [propsCode, setPropsCode] = useState("");
   const [showErrorScreen, setShowErrorScreen] = useState(false);
+  const [incorrectQuestions, setIncorrectQuestions] = useState([])
 
   const onCollectionUpdate = (querySnapshot) => {
     const questions = [];
@@ -74,16 +76,42 @@ const Quiz = (props) => {
   }, [propsCode, currentQuestion, showScore]);
 
   const updatePosition = () => {
-    const place = currentQuestion + 1;
+    const place = currentQuestion;
     const distributed = 100 / questions.length - 1;
     setPosition(distributed * place );
   };
+  
+  const handleIncorrectAnswers = (incorrectAnswerText, currentQuestion) => {
+    var incorrectQuestions = [];
+    var correctAnswerText = '';
+    const questionText = questions[currentQuestion].questionText;
+    incorrectQuestions.forEach((question) => {
+      incorrectQuestions.push(question);
+    })    
+    questions[currentQuestion].answerOptions.map((answerOption, index) => {
+      if (answerOption.isCorrect) {
+        correctAnswerText = answerOption.answerText;
+      } 
+    })
+    incorrectQuestions.push({
+      correctAnswerText,
+      incorrectAnswerText,
+      currentQuestion,
+      questionText,
+    })
+  setIncorrectQuestions(incorrectQuestions)
 
-  const handleAnswerButtonClick = (isCorrect) => {
-    const nextQuestion = currentQuestion + 1;
+  }
+
+  const handleAnswerButtonClick = (isCorrect, answerText, currentQuestion) => {
     if (isCorrect) {
       setScore(score + 1);
-    }
+    } else {
+      handleIncorrectAnswers(answerText, currentQuestion)
+    }    
+   
+    const nextQuestion = currentQuestion + 1;
+
     setPropsCode("set next question here to be:");
 
     if (nextQuestion < questions.length) {
@@ -98,9 +126,6 @@ const Quiz = (props) => {
     return (
       <div>
         <Header />
-        <QuizName className="text-center">
-          You are competing the {quiz.quizName} quiz
-        </QuizName>
         <Container>
           {showErrorScreen ? (
             <>
@@ -116,25 +141,20 @@ const Quiz = (props) => {
           ) : (
             <>
               
-              <Row className="bg-dark text-light p-4 m-5">
+              <Row>
                 <Col>
                   {showScore ? (
-                    <div className="score-section text-center">
-                      <Row>
-                        <p className="text-center">
-                          You scored {score} out of {questions.length}
-                        </p>
-                      </Row>
-                      <Row>
-                        <Link to="/">
-                          <Button>Go back to Home</Button>
-                        </Link>
-                      </Row>
-                    </div>
+                    <>
+                    <ShowScore score={score} length={questions.length} incorrectQuestions={incorrectQuestions}/>
+                    </>
                   ) : (
                     <>
-                    <ProgressBar label={`${position}%`} animated now={position} />
-                    <Row>
+                    <QuizName className="text-center">
+                      You are competing the {quiz.quizName} quiz
+                    </QuizName>
+                    <ProgressBar animated now={position} className="m-5"/>
+
+                    <Row  className="bg-dark text-light p-4 m-5">
                       <Col>
                         <div className="mb-1">
                           <span>Question {currentQuestion + 1}</span>/
@@ -154,7 +174,9 @@ const Quiz = (props) => {
                                 variant="secondary"
                                 onClick={() =>
                                   handleAnswerButtonClick(
-                                    answerOption.isCorrect
+                                    answerOption.isCorrect,
+                                    answerOption.answerText,
+                                    currentQuestion,
                                   )
                                 }
                               >
