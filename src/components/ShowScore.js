@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const ShowScore = (props) => {
-  console.log(props);
   return (
     <>
       <div className="text-center bg-dark text-light p-4 m-5">
@@ -22,7 +21,10 @@ const ShowScore = (props) => {
           </Link>
         </Row>
       </div>
+      {props.incorrectQuestions ? (
+      <>
       <Row className="bg-dark text-light p-4 m-5">
+        <h3>Incorrect answers </h3>
           {props.incorrectQuestions.map((question, index) => (
             <>
               <Row >
@@ -51,6 +53,7 @@ const ShowScore = (props) => {
               </>
           ))}
         </Row>
+        </> ) : ''}
     </>
   );
 };

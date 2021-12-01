@@ -80,25 +80,25 @@ const Quiz = (props) => {
   };
   
   const handleIncorrectAnswers = (incorrectAnswerText, currentQuestion) => {
-    var incorrectQuestions = [];
+    var incorrectQQuestions = [];
     var correctAnswerText = '';
     const questionText = questions[currentQuestion].questionText;
     incorrectQuestions.forEach((question) => {
-      incorrectQuestions.push(question);
+      incorrectQQuestions.push(question);
     })    
     questions[currentQuestion].answerOptions.map((answerOption, index) => {
       if (answerOption.isCorrect) {
         correctAnswerText = answerOption.answerText;
       } 
     })
-    incorrectQuestions.push({
+    incorrectQQuestions.push({
       correctAnswerText,
       incorrectAnswerText,
       currentQuestion,
       questionText,
     })
-  setIncorrectQuestions(incorrectQuestions)
 
+  setIncorrectQuestions(incorrectQQuestions)
   }
 
   const handleAnswerButtonClick = (isCorrect, answerText, currentQuestion) => {
