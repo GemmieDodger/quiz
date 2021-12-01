@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
+import Modal from "react-bootstrap/Modal";
 
 const EditQuestions = (props) => {
   // state for display of quiz
@@ -26,6 +27,11 @@ const EditQuestions = (props) => {
     code: "",
     timestamp: 0,
   });
+  // modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const onCollectionUpdate = (querySnapshot) => {
     const questions = [];
@@ -116,6 +122,7 @@ const EditQuestions = (props) => {
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
+        handleShow()
     });
   };
 
@@ -158,6 +165,15 @@ const EditQuestions = (props) => {
   }
   `}
         </style>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Your changes have been saved</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
         <Row className="bg-dark text-light p-4 m-5">
           <h2>UPDATE QUESTIONS</h2>
           <Form onSubmit={onSubmitQuestions}>
