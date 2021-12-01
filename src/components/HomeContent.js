@@ -51,17 +51,17 @@ const HomeContent = () => {
       </Row>
       <Row>
         <h1 className="mb-3">Choose your quiz?</h1> 
-        <Link to="/admin"><h6>Create or edit quiz?</h6></Link>
+        <Link className="text-decoration-none text-info" to="/admin"><h6>Create or edit quiz?</h6></Link>
       </Row>
       <Row className="g-4 text-center justify-content-center">
         {state.quizzes.map((quiz) => (
           <Col xs={12} md={4}>
           <div key={quiz.key}  data-label="quiz">
-            <QuizLink to={`/quiz/${quiz.key}/${quiz.quizName}`} >
+            <Link className="text-decoration-none text-" to={`/quiz/${quiz.key}/${quiz.quizName}`} >
               <Card style={{height: 250}} className="bg-dark d-flex  m-0 p-0 text-light xs={1} md={2}">
-                <Card.Body className="align-items-center d-flex justify-content-center" ><QuizHeader>{quiz.quizName}</QuizHeader></Card.Body>
+                <Card.Body className="align-items-center d-flex justify-content-center" ><h3>{quiz.quizName}</h3></Card.Body>
               </Card>
-            </QuizLink>
+            </Link>
           </div>
           </Col>
         ))}
@@ -72,11 +72,3 @@ const HomeContent = () => {
 
 export default HomeContent;
 
-const QuizHeader = styled.h3`
-  fontSize: '15px';
-  
-`;
-
-const QuizLink = styled(Link)`
-  textDecoration: 'none';
-`;
