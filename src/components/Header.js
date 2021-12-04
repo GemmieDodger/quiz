@@ -12,7 +12,7 @@ const Header = (props) => {
   
   return (
     <>
-      <Container fluid className="p-5 bg-dark text-white">
+      <Container fluid className="p-5 bg-dark text-white" data-testid="header">
         <Row>
           <Col xs={8} sm={10}>
             <Link className="text-decoration-none text-secondary" to="/"><h1>QUESTIONSHOP</h1></Link>

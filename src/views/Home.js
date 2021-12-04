@@ -1,11 +1,12 @@
+import React from "react";
 import Header from '../components/Header';
 import HomeContent from '../components/HomeContent';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home() {
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <HomeContent />
     </div>
   );

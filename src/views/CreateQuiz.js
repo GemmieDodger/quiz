@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import firebase from "../Firebase";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";

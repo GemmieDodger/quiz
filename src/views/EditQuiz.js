@@ -1,6 +1,6 @@
 import React from "react";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
 import SubHeader from "../components/SubHeader";
 import AddQuestion from "../components/AddQuestion";

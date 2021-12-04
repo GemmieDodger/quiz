@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../Firebase";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
@@ -39,7 +39,7 @@ const HomeContent = () => {
   }, []);
 
   return (
-    <Container className="text-center">
+    <Container className="text-center" data-testid="homecontent">
       <Row>
         <Col>
           <p className="mt-2 mb-0 text-center">

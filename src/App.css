@@ -11,9 +11,9 @@
   color: #ffffff;
 }
 */
-
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
-
+/* 
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext'); */
+@import url("node_modules/bootstrap/dist/css/bootstrap.css");
 body {
   background-color: gray;
   /* display: flex;
