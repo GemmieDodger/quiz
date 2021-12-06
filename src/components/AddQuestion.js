@@ -75,7 +75,7 @@ const AddQuestion = (props) => {
       });
   };
 
-  const { answerOptions, code, questionText, timestamp } = newQuestion;
+  const { answerOptions, code, questionText } = newQuestion;
 
 return(
 <Form className="bg-dark text-light p-4 m-5" onSubmit={onSubmit}>

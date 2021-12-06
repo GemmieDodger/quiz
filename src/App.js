@@ -1,6 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import 'bootstrap';
