@@ -42,7 +42,7 @@ const HomeContent = () => {
     <Container className="text-center" data-testid="homecontent">
       <Row>
         <Col>
-          <p className="mt-2 mb-0 text-center">
+          <p className="mt-2 mb-0 text-center text-success">
             You've made it to the QUESTIONSHOP!
           </p>
           <p className="mb-4 text-center">Next step, knowledge!</p>
