@@ -37,7 +37,7 @@ const HomeContent = () => {
     return () => unsubscribe();
   }, []);
 
-  return (
+  return(
     <Container className="text-center" data-testid="homecontent">
       <Row>
         <Col>
