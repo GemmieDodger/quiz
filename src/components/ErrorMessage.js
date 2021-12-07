@@ -29,7 +29,7 @@ const ErrorMessage = (props) => {
       </Row>
       <Row><h6>or</h6></Row>
       <Row className="mb-5">
-        <Link to={`/admin/edit/quiz/${props.quiz.key}/${props.quiz.quizName}`}><h4>Edit quiz</h4></Link>
+        <Link to={`/`}><h4>Edit quiz</h4></Link>
       </Row>
       </Col>
     </>

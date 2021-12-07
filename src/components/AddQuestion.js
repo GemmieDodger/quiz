@@ -221,6 +221,6 @@ return(
                   </Row>
                 </Form>
 
-)}
+)};
 
 export default AddQuestion;

@@ -6,10 +6,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-
+import FirebaseAuth from "../firebaseAuth";
 
 const Header = (props) => {
-  
+
   return (
     <>
       <Container fluid className="p-5 bg-dark text-white" data-testid="header">
@@ -22,7 +22,19 @@ const Header = (props) => {
               <Link to="/">
                 <Button className="bg-secondary text-light">Home</Button>
               </Link>
-        
+              {!props.user ? 
+              <>
+              <Link to="/login">
+                <Button className="bg-success text-light">Login</Button>
+              </Link>
+              </>
+              : 
+              <>
+              <Link to="/logout">
+                <Button className="bg-danger text-light" onClick={props.logout}>Logout</Button>
+              </Link>
+              </>
+              }
           </Col>
         </Row>
       </Container>

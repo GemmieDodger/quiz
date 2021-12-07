@@ -10,7 +10,7 @@ const HomeContent = (props) => {
   const [state, setState] = useState({
     quizzes: [],
   });
-
+  const user = props.user;
   const onCollectionUpdate = (querySnapshot) => {
     const quizzes = [];
     querySnapshot.forEach((doc) => {
@@ -37,7 +37,7 @@ const HomeContent = (props) => {
     return () => unsubscribe();
   }, []);
 
-  return(
+  return (
     <Container className="text-center" data-testid="homecontent">
       <Row>
         <Col>
@@ -48,25 +48,45 @@ const HomeContent = (props) => {
         </Col>
       </Row>
       <Row>
-        <h1 className="mb-3">Choose your quiz?</h1> 
-        <Link className="text-decoration-none text-info" to="/admin"><h6>Create or edit quiz?</h6></Link>
+        <h1 className="mb-3">Choose your quiz?</h1>
+
       </Row>
       <Row className="g-4 text-center justify-content-center">
+    <Link className="text-decoration-none text-info" to={{ pathname:"/admin", passedProps:{user: user}}}>
+              <Card
+                  style={{ maxHeight: 100 }}
+                  className="bg-secondary d-flex  m-0 p-0 text-light xs={1} md={2}"
+                >
+                  <Card.Body className="align-items-center d-flex justify-content-center">
+               <h3>Create or edit quiz?</h3>
+               </Card.Body>
+                </Card>
+              </Link>
+      
+      
         {state.quizzes.map((quiz) => (
-          <Col xs={12} md={4}>
-          <div key={quiz.key}  data-label="quiz">
-            <Link className="text-decoration-none text-" to={`/quiz/${quiz.key}/${quiz.quizName}`} >
-              <Card style={{height: 250}} className="bg-dark d-flex  m-0 p-0 text-light xs={1} md={2}">
-                <Card.Body className="align-items-center d-flex justify-content-center" ><h3>{quiz.quizName}</h3></Card.Body>
-              </Card>
-            </Link>
-          </div>
-          </Col>
+          <Col xs={12} md={4}>    
+            <div key={quiz.key} data-label="quiz">
+              <Link
+                className="text-decoration-none text-"
+                to={{ pathname:`/quiz/${quiz.key}/${quiz.quizName}`, passedProps:{user: user}}}
+              >
+                <Card
+                  style={{ height: 250 }}
+                  className="bg-dark d-flex  m-0 p-0 text-light xs={1} md={2}"
+                >
+                  <Card.Body className="align-items-center d-flex justify-content-center">
+                    <h3>{quiz.quizName}</h3>
+                  </Card.Body>
+                </Card>
+              </Link>
+            </div>
+            </Col>          
         ))}
+
       </Row>
     </Container>
   );
 };
 
 export default HomeContent;
-

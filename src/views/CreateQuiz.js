@@ -38,30 +38,30 @@ const CreateQuiz = (props) => {
 
   return (
     <>
-    <div>
-      <Header />
       <div>
-        <Container>
-          <Row className="bg-dark text-light p-4 m-5">
-            <h2>ADD A QUIZ</h2>
-            <Form onSubmit={onSubmitQuiz}>
-              <Form.Group className="mb-3" controlId="quizName">
-                <Form.Control
-                  as="textarea"
-                  rows={1}
-                  placeholder="Add quiz name here"
-                  name="quizName"
-                  onChange={onChangeQuiz}
-                />
-              </Form.Group>
-              <Button variant="primary" className="m-4 " type="submit">
-                Create new quiz
-              </Button>
-            </Form>
-          </Row>
-        </Container>
+        <Header user={props.location.passedProps.user}/>
+        <div>
+          <Container>
+            <Row className="bg-dark text-light p-4 m-5">
+              <h2>ADD A QUIZ</h2>
+              <Form onSubmit={onSubmitQuiz}>
+                <Form.Group className="mb-3" controlId="quizName">
+                  <Form.Control
+                    as="textarea"
+                    rows={1}
+                    placeholder="Add quiz name here"
+                    name="quizName"
+                    onChange={onChangeQuiz}
+                  />
+                </Form.Group>
+                <Button variant="primary" className="m-4 " type="submit">
+                  Create new quiz
+                </Button>
+              </Form>
+            </Row>
+          </Container>
+        </div>
       </div>
-    </div>
     </>
   );
 };

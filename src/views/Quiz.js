@@ -14,6 +14,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
 import Header from "../components/Header";
 import ShowScore from "../components/ShowScore";
+import useAuth from "../firebaseAuth";
 
 const Quiz = (props) => {
   // state for quiz play
@@ -27,6 +28,9 @@ const Quiz = (props) => {
   const [propsCode, setPropsCode] = useState("");
   const [showErrorScreen, setShowErrorScreen] = useState(false);
   const [incorrectQuestions, setIncorrectQuestions] = useState([])
+
+  // auth
+  const { user } = useAuth();
 
   const onCollectionUpdate = (querySnapshot) => {
     const questions = [];
@@ -123,7 +127,7 @@ const Quiz = (props) => {
   try {
     return (
       <div>
-        <Header />
+        <Header user={props.location.passedProps.user} />
         <Container>
           {showErrorScreen ? (
             <>
