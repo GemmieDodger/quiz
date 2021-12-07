@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 
-const HomeContent = () => {
+const HomeContent = (props) => {
   const [state, setState] = useState({
     quizzes: [],
   });
