@@ -16,7 +16,7 @@ import Header from "../components/Header";
 import ShowScore from "../components/ShowScore";
 
 const Quiz = (props) => {
-  // state for game play
+  // state for quiz play
   const [isLoading, setIsLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);

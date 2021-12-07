@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../Firebase";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";

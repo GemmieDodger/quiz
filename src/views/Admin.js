@@ -3,7 +3,6 @@ import firebase from "../Firebase";
 
 import { Link } from "react-router-dom";
 
-// import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Header from "../components/Header";
 import Card from "react-bootstrap/Card";

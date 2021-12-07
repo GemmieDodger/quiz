@@ -21,7 +21,6 @@ function App() {
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/admin/create' component={CreateQuiz} />
             <Route exact path='/admin/edit/quiz/:id/:quizname' component={EditQuiz} />
-            {/* <Route exact path='/edit/:id' component={Edit} /> */}
           </Switch>
         </div>
       </Router>
