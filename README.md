@@ -6,7 +6,7 @@
 - [Planning](#Planning)
 - [Deployment](#Deployment)
 - [Useage](Useage)
-- [Build locally](Build locally)
+- [Build-locally](Build-locally)
 - [Testing](Testing)
 
 
