@@ -1,13 +1,14 @@
 # Quiz app
 
 ## Table of Contents
-### Description
-### Context
-### Planning
-### Deployment
-### Useage
-### Build locally
-### Testing
+Description
+Context
+Planning
+Deployment
+Useage
+Build locally
+Testing
+
 
 ## Description
 This app is to explore building a quiz style app in a computer browser utilising:
