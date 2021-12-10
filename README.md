@@ -1,13 +1,13 @@
 # Quiz app
 
 ## Table of Contents
-Description
+[Description](#Description)
 [Context](#Context)
-Planning
-Deployment
-Useage
-Build locally
-Testing
+[Planning](#Planning)
+[Deployment](#Deployment)
+[Useage](Useage)
+[Build locally](Build locally)
+[Testing](Testing)
 
 
 ## Description
