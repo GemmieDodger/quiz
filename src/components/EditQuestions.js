@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import Modal from "react-bootstrap/Modal";
+import ErrorMessage from "../components/ErrorMessage";
 
 const EditQuestions = (props) => {
   // state for display of quiz
@@ -70,26 +71,17 @@ const EditQuestions = (props) => {
 
   const onChangeQuestions = (e) => {
     const name = e.target.name;
-    console.log(name)
     const questionRef = parseInt(name.match(/\d+/)[0]);
     if (name.includes("answerText")) {
       const ref = parseInt(name.match(/\d+/g)[1]);
       questions[questionRef].answerOptions[ref].answerText = e.target.value;
-      console.log(e.target.value)
-      console.log(questions[questionRef].answerOptions[ref].answerText)
     } else if (name.includes("isCorrect")) {
       const ref = parseInt(name.match(/\d+/g)[1]);
       questions[questionRef].answerOptions[ref].isCorrect = e.target.value;
-      console.log(e.target.value)
-      console.log(questions[questionRef].answerOptions[ref].isCorrect)
     } else if (name.includes("code")) {
       questions[questionRef]["code"] = e.target.value;
-      console.log(e.target.value)
-      console.log(questions[questionRef]["code"])
     } else if (name.includes("questionText")) {
       questions[questionRef]["questionText"] = e.target.value;
-      console.log(e.target.value)
-      console.log(questions[questionRef]["questionText"])
     }
     setQuestions(questions);
   };
@@ -120,7 +112,7 @@ const EditQuestions = (props) => {
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
-        handleShow()
+      handleShow();
     });
   };
 
@@ -142,36 +134,20 @@ const EditQuestions = (props) => {
   };
 
   const { answerOptions, code, questionText, timestamp } = newQuestion;
-  if (questions[0]) {
+  try {
     return (
       <>
-        <style type="text/css">
-          {`
-  .h4-quizAlign {
-    textalign: "right";
-    padding: 1em;
-  }
-
-  .btn-flat {
-    background-color: purple;
-    color: white;
-  }
-
-  .btn-xxl {
-    padding: 1rem 1.5rem;
-    font-size: 1.5rem;
-  }
-  `}
-        </style>
         <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Your changes have been saved</Modal.Title>
-        </Modal.Header>
+          <Modal.Header closeButton>
+            <Modal.Title>Your changes have been saved</Modal.Title>
+          </Modal.Header>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Row className="bg-dark text-light p-4 m-5">
           <h2>UPDATE QUESTIONS</h2>
           <Form onSubmit={onSubmitQuestions}>
@@ -345,11 +321,12 @@ const EditQuestions = (props) => {
         </Row>
       </>
     );
-  } else {
-      return (
-          <>
-          </>
-      )
+  } catch (e) {
+    return (
+      <>
+        <ErrorMessage type="questions" quiz={quiz} error={e} />
+      </>
+    );
   }
 };
 

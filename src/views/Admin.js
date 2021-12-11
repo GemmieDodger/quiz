@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "../Firebase";
 
 import { Link } from "react-router-dom";
+import ErrorMessage from "../components/ErrorMessage";
 
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
@@ -42,6 +43,7 @@ const Admin = (props) => {
     return () => unsubscribe();
   }, []);
 
+  try { 
   return (
     <>
     <Header user={props.location.passedProps.user}/>
@@ -70,6 +72,14 @@ const Admin = (props) => {
     </Container>
     </>
   );
+} catch (e) {
+  return (
+    <>
+      <Header />
+      <ErrorMessage type="quizzes" error={e} />
+    </>
+  );
+}
 };
 
 export default Admin;

@@ -129,20 +129,12 @@ const Quiz = (props) => {
       <div>
         <Header user={props.location.passedProps.user} />
         <Container>
-          {showErrorScreen ? (
-            <>
-              <ErrorMessage type="questions" quiz={quiz} />
-            </>
-          ) : (
-            ""
-          )}
           {isLoading ? (
             <>
               <Loading />
             </>
           ) : (
-            <>
-              
+            <>           
               <Row>
                 <Col>
                   {showScore ? (
@@ -202,7 +194,7 @@ const Quiz = (props) => {
     return (
       <>
         <Header />
-        <ErrorMessage type="quiz" quiz={quiz} />
+        <ErrorMessage type="questions" quiz={quiz} error={e} />
       </>
     );
   }
