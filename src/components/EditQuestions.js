@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import Modal from "react-bootstrap/Modal";
+import ShowModal from "../components/ShowModal";
 import ErrorMessage from "../components/ErrorMessage";
 
 const EditQuestions = (props) => {
@@ -28,6 +28,7 @@ const EditQuestions = (props) => {
   });
   // modal
   const [show, setShow] = useState(false);
+  const [type, setType] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -112,7 +113,8 @@ const EditQuestions = (props) => {
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
-      handleShow();
+        setType("saved");
+        handleShow();
     });
   };
 
@@ -125,7 +127,8 @@ const EditQuestions = (props) => {
       .doc(questionId)
       .delete()
       .then(() => {
-        setDeleted(deleted ? true : false);
+        setType("deleted");
+        handleShow();
         console.log("Document successfully deleted!");
       })
       .catch((error) => {
@@ -137,17 +140,12 @@ const EditQuestions = (props) => {
   try {
     return (
       <>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Your changes have been saved</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      {show ? (
+        <>
+          <ShowModal handleClose={handleClose.bind(this, show)} show={show} type={type}/>
+        </>
+      ) : ""}
+        
         <Row className="bg-dark text-light p-4 m-5">
           <h2>UPDATE QUESTIONS</h2>
           <Form onSubmit={onSubmitQuestions}>
