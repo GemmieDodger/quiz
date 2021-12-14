@@ -1,7 +1,6 @@
 import React from "react";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import "bootstrap";
 import Home from "./views/Home";
 import Quiz from "./views/Quiz";
 import Admin from "./views/Admin";

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState, useContext, createContext, FunctionComponent} from 'react';
 import firebase from './Firebase';
 
@@ -8,7 +9,7 @@ const AuthContext = createContext({
     logout: () => {}
 });
 
-const AuthProvider: FunctionComponent = ({children}) => {
+const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
