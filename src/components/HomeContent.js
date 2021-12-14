@@ -65,7 +65,7 @@ const HomeContent = (props) => {
       
       
         {state.quizzes.map((quiz) => (
-          <Col xs={12} md={4}>    
+          <Col key={quiz.id} xs={12} md={4}>    
             <div key={quiz.key} data-label="quiz">
               <Link
                 className="text-decoration-none text-"

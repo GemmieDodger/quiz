@@ -21,10 +21,15 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // check mounted to  bipass that I was calling an unmounted component
+        let mounted = true;
         const auth = getAuth();
         onAuthStateChanged(auth, (u) => {
-            setUser(u);
-            setLoading(false);
+            if (mounted) {
+                setUser(u);
+                setLoading(false);
+            }
+            
             console.log('user', u);
             if (u) {
               // User is signed in, see docs for a list of available properties
@@ -36,11 +41,7 @@ const AuthProvider = ({ children }) => {
               console.log("User is signed out");
             }
           });
-        // const cancelAuthListener = firebase.auth().onIdTokenChanged(u => {
-        //     setUser(u);
-        //     setLoading(false);
-        // });
-        // return () => cancelAuthListener();
+        return () => mounted = false;
     }, [])
 
     return ( <AuthContext.Provider value = {
