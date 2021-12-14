@@ -7,6 +7,7 @@ import Admin from "./views/Admin";
 import CreateQuiz from "./views/CreateQuiz";
 import EditQuiz from "./views/EditQuiz";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import { AuthProvider } from "./authProvider";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -20,14 +21,11 @@ function App() {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/logout" component={Logout} />
               <Route exact path="/quiz/:id/:quizname" component={Quiz} />
               <Route exact path="/admin" component={Admin} />
               <Route exact path="/admin/create" component={CreateQuiz} />
-              <Route
-                exact
-                path="/admin/edit/quiz/:id/:quizname"
-                component={EditQuiz}
-              />
+              <Route exact path="/admin/edit/quiz/:id/:quizname" component={EditQuiz} />
             </Switch>
           </div>
         </Router>
