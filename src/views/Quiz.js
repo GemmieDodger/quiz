@@ -128,7 +128,7 @@ const Quiz = (props) => {
     return (
       <div>
         <Header user={props.location.passedProps.user} />
-        <Container>
+        <Container data-testid="quiz">
           {isLoading ? (
             <>
               <Loading />
