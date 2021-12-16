@@ -65,7 +65,7 @@ const HomeContent = (props) => {
       
       
         {state.quizzes.map((quiz) => (
-          <Col key={quiz.id} xs={12} md={4}>    
+          <Col key={quiz.id} xs={12} md={4} >    
             <div key={quiz.key} data-label="quiz">
               <Link
                 className="text-decoration-none text-"
@@ -75,8 +75,8 @@ const HomeContent = (props) => {
                   style={{ height: 250 }}
                   className="bg-dark d-flex  m-0 p-0 text-light xs={1} md={2}"
                 >
-                  <Card.Body className="align-items-center d-flex justify-content-center">
-                    <h3>{quiz.quizName}</h3>
+                  <Card.Body data-testid="quizCard" className="align-items-center d-flex justify-content-center">
+                    <h3>{quiz.quizName} Quiz</h3>
                   </Card.Body>
                 </Card>
               </Link>

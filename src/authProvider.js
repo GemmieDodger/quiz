@@ -30,16 +30,11 @@ const AuthProvider = ({ children }) => {
                 setLoading(false);
             }
             
-            console.log('user', u);
             if (u) {
               // User is signed in, see docs for a list of available properties
               // https://firebase.google.com/docs/reference/js/firebase.User
               const uid = u.uid;
-              console.log("User is signed in");
-            } else {
-              // User is signed out
-              console.log("User is signed out");
-            }
+            } 
           });
         return () => mounted = false;
     }, [])

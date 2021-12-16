@@ -14,16 +14,13 @@ const CreateQuiz = (props) => {
 
   const onChangeQuiz = (e) => {
     setQuiz({ quizName: e.target.value });
-    console.log(quiz.quizName);
   };
 
   const onSubmitQuiz = (e) => {
     e.preventDefault();
-    console.log("submit here");
     const { quizName } = quiz;
 
     const ref = firebase.firestore().collection("quizzes");
-    console.log(ref);
 
     ref
       .add({ quizName })

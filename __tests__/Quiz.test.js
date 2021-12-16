@@ -29,7 +29,7 @@ ref.get().then((doc) => {
   }
 });
 ref.onSnapshot(onCollectionUpdate);
-  
+
 render(<App />);
 
 

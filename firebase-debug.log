@@ -1,0 +1,22 @@
+[debug] [2021-12-15T13:39:40.042Z] ----------------------------------------------------------------------
+[debug] [2021-12-15T13:39:40.044Z] Command:       /Users/gemmadruce/.nvm/versions/node/v16.0.0/bin/node /Users/gemmadruce/.nvm/versions/node/v16.0.0/bin/firebase init
+[debug] [2021-12-15T13:39:40.044Z] CLI Version:   9.20.0
+[debug] [2021-12-15T13:39:40.044Z] Platform:      darwin
+[debug] [2021-12-15T13:39:40.044Z] Node Version:  v16.0.0
+[debug] [2021-12-15T13:39:40.046Z] Time:          Wed Dec 15 2021 13:39:40 GMT+0000 (Greenwich Mean Time)
+[debug] [2021-12-15T13:39:40.046Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-12-15T13:39:40.048Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2021-12-15T13:39:40.068Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-12-15T13:39:40.068Z] > authorizing via signed-in user (gemmadruce@live.co.uk)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/gemmadruce/Development/code/quiz
+
