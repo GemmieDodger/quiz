@@ -1,17 +1,12 @@
-// import firebase from 'firebase/app';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-// import 'firebase/firestore'
-// import 'firebase/auth';
 
 const settings = {
     timestampsInSnapshots: true, 
     merge: true 
 };
-// import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
 
 // Your web app's Firebase configuration
 const config = {
@@ -24,7 +19,6 @@ const config = {
 };
 
 // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
 firebase.initializeApp(config);
 
 firebase.firestore().settings(settings);
