@@ -1,4 +1,5 @@
-describe('My First Test', () => {
+describe('My Functionality Tests for admin', () => {
+
     // first login to auth on cypress to cut out having to type password into github
 
     it('Admin processes!', () => {

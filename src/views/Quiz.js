@@ -165,6 +165,7 @@ const Quiz = (props) => {
                             (answerOption, index) => (
                               <Button
                                 key={answerOption.key}
+                                id={"answerOption" + index}
                                 variant="secondary"
                                 onClick={() =>
                                   handleAnswerButtonClick(
