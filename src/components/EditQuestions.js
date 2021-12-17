@@ -151,7 +151,7 @@ const EditQuestions = (props) => {
           <Form onSubmit={onSubmitQuestions}>
             {questions.map((question, index) => (
               <>
-                <Row className="mb-4 mt-4" test-id="editQuestion" key={index}>
+                <Row className="mb-4 mt-4" test-id="editQuestion" class="editQuestion" key={index}>
                   <Col>
                     <div className="mb-1">
                       <span>
@@ -161,6 +161,8 @@ const EditQuestions = (props) => {
                     <Form.Group className="mb-3" controlId="questionText">
                       <Form.Control
                         as="textarea"
+                        class="questionText"
+                        key={index}
                         rows={2}
                         placeholder={questions[index].questionText}
                         name={`question[${index}].questionText`}
@@ -187,6 +189,7 @@ const EditQuestions = (props) => {
                     <Row>
                       <Button
                         onClick={deleteQuestion.bind(this, question.key)}
+                        key={index}
                         className="btn-danger mt-4"
                       >
                         Delete

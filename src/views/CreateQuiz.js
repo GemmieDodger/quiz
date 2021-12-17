@@ -44,6 +44,7 @@ const CreateQuiz = (props) => {
               <Form onSubmit={onSubmitQuiz}>
                 <Form.Group className="mb-3" controlId="quizName">
                   <Form.Control
+                    id="addAQuizName"
                     as="textarea"
                     rows={1}
                     placeholder="Add quiz name here"

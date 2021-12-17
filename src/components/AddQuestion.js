@@ -88,6 +88,7 @@ return(
                         </Form.Label>
                         <Form.Control
                           as="textarea"
+                          id="addQuestion"
                           rows={2}
                           placeholder="Ask question here"
                           name="questionText"
@@ -107,6 +108,7 @@ return(
                         </Row>
                         <Form.Control
                           as="textarea"
+                          id="addQuestionCode"
                           rows={3}
                           placeholder="if (a < b) { console.log('Yeah!') }"
                           name="code"
@@ -130,6 +132,7 @@ return(
                                   </Form.Label>
                                   <Form.Control
                                     as="textarea"
+                                    id="addQuestionAnswer1"
                                     rows={1}
                                     placeholder="Option 1"
                                     name="answerOptions[0].answerText"
@@ -161,6 +164,7 @@ return(
                                   </Form.Label>
                                   <Form.Control
                                     as="textarea"
+                                    id="addQuestionAnswer2"
                                     rows={1}
                                     placeholder="Option 2"
                                     name="answerOptions[1].answerText"
@@ -189,6 +193,7 @@ return(
                                   </Form.Label>
                                   <Form.Control
                                     as="textarea"
+                                    id="addQuestionAnswer3"
                                     rows={1}
                                     placeholder="Option 3"
                                     name="answerOptions[2].answerText"
@@ -203,6 +208,7 @@ return(
                                   aria-label="The answer is correct or incorrect"
                                   name="answerOptions[2].isCorrect"
                                   onChange={onChange}
+                                  id="addQuestionBoolean"
                                 >
                                   <option value="false">Incorrect</option>
                                   <option value="true">Correct</option>
