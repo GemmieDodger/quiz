@@ -61,8 +61,12 @@ DISCLAIMER: Please note that this link works on the 10th December 2021, but will
 ## Testing
 
 - Open a new terminal in VSC
-- Run `npm test`
-- View completed unit tests
+- npm cypress install
+- npx cypress open
+- Click test to run
+- View completed integration tests
+- npm run test
+- View completed unit tests (Integration tests fail)
 
 
 ## TEMPLATE
