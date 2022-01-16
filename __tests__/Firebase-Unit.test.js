@@ -4,7 +4,8 @@ import firebase from "../src/Firebase";
 const { render, screen } = require("@testing-library/react");
 import 'regenerator-runtime';
 
-test("expect render inc. firebase for app", async () => {
+describe('Firebase integration with app', () => {
+  test("Expect render to include quizCards when rendering app.", async () => {
     const fetchPromise = Promise.resolve([{ name: "quizCard" }]);
     jest.spyOn(firebase, "app").mockImplementation(() => ({
       firestore: () => ({
@@ -16,5 +17,8 @@ test("expect render inc. firebase for app", async () => {
     let wrapper = render(<App />);
     await fetchPromise;
     wrapper.rerender;
-    await expect(wrapper.findAllByTestId("quizCard")).toHaveReturnedTimes
+    const quizCards = wrapper.findAllByTestId("quizCard");
+    await expect(quizCards).toBeInTheDocument
+    await expect(quizCards[0]).toContainHTML;
   });
+})

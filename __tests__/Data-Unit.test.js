@@ -2,7 +2,8 @@ import React from "react";
 import { render, screen } from '@testing-library/react';
 import firebase from "../src/Firebase";
 
-test('can reach quiz data from firebase', () => {
+describe('Firebase connection', () => {
+  test('Can reach quiz data from firebase.', () => {
     const onCollectionUpdate = (querySnapshot) => {
         const quizzes = []
         expect(quizzes.length).toBe(0)
@@ -26,7 +27,7 @@ test('can reach quiz data from firebase', () => {
     ref.onSnapshot(onCollectionUpdate);
 });
 
-test('can reach quiz data from firebase', () => {
+test('Can reach quiz data from firebase.', () => {
   const onCollectionUpdate = (querySnapshot) => {
       const quizzes = []
       expect(quizzes.length).toBe(0)
@@ -52,3 +53,4 @@ test('can reach quiz data from firebase', () => {
   });
   ref.onSnapshot(onCollectionUpdate);
 });
+})
